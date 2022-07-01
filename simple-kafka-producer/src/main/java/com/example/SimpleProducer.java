@@ -1,14 +1,17 @@
 package com.example;
 
+/*
+ * 모든 코드 출처 : https://github.com/bjpublic/apache-kafka-with-java
+ */
+
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-/*
-* 모든 코드 출처 : https://github.com/bjpublic/apache-kafka-with-java
-*/
+
 import java.util.Properties;
 
 public class SimpleProducer {
@@ -25,14 +28,22 @@ public class SimpleProducer {
         KafkaProducer<String, String> producer = new KafkaProducer<>(configs);//producer인스턴스는 ProducerRecord를 전송할 때 사용
 
         String messageValue = "testMessage";//메시지 값 설정
+
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, messageValue);
         //카프카 브로커로 데이터를 보내기 위해 ProducerRecord를 생성
         //ProducerRecord는 생성자를 여러 개 가지는데, 생성자 개수에 따라 오버로딘 되어 생성됨
         //키를 따로 설정하지 않아서 키는 null로 설정되어 전송됨
         //ProducerRecord를 생성할 때 두 개의 제네릭 값. 이 값은 메시지의 키와 메시지 값의 타입을 뜻함 메시지 키와 값의 타입은 직렬화 클래스와 동일하게 설정
         producer.send(record);//send()메서드는 즉각적으로 데이터 전송 No. 파라미터로 들어간 record를 프로듀서 내부에 가지고 있다가 배치 형태로 묶어서 전송. = 배치전송
+        // * send()할때 ProducerRecord는 파티셔너에서 토픽의 어느 파티션으로 전송될 것인지 정해진다.
+        // * 파티셔너를 따로 설정하지 않으면 기본값인 DefaultPartitioner로 설정되어 파티션이 정해진다.
+        // * 파티셔너에 의해 구분된 레코드는 데이터를 전송하기 전에 accumulator에 데이터를 버퍼로 쌓아놓고 발송한다. --> 배치로 묶여서 전송
         logger.info("{}", record);
+
+        System.out.println("record = " + record);
+
         producer.flush();//flush()를 통해 프로듀서 내부 버퍼에 가지고 있던 레코드 배치를 브로커로 전송
+
         producer.close();//애플리케이션을 종료하기 전에 close()메서드를 호출하여 producer 인스턴스의 리소스들을 안전하게 종료
     }
 }
