@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
+/*
+ * 모든 코드 출처 : https://github.com/bjpublic/apache-kafka-with-java
+ */
 
 // 동기 오프셋 커밋
 // 데이터 중복이나 유실을 허용하지 않는 서비스라면 자동 커밋을 해서는 안된다. 해서 명시적으로 오프셋을 커밋하기 위해 poll()메서드를 호출 이후에 반환받은

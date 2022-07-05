@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c280710c-04a4-4480-b872-916f6290db33" name="Changes" comment="Chapter 3. 프로듀서 api 까지">
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer6.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer7.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/rebalanceListener/RebalanceListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer3.java" beforeDir="false" afterPath="$PROJECT_DIR$/../simple-kafka-consumer/src/main/java/com/example/SimpleConsumer3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,6 +181,7 @@
       <workItem from="1656678107722" duration="2208000" />
       <workItem from="1656680552828" duration="5036000" />
       <workItem from="1656776338845" duration="1456000" />
+      <workItem from="1657028688834" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="Chapter 3. 프로듀서 api 까지">
       <created>1656689478386</created>

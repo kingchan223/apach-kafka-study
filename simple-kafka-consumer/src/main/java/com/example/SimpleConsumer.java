@@ -12,6 +12,9 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+/*
+ * 모든 코드 출처 : https://github.com/bjpublic/apache-kafka-with-java
+ */
 
 public class SimpleConsumer {
     private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer.class);

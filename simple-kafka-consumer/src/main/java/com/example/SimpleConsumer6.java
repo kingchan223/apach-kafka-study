@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.rebalanceListener.RebalanceListener;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -7,18 +8,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 /*
  * 모든 코드 출처 : https://github.com/bjpublic/apache-kafka-with-java
  */
 
-// 동기 오프셋 커밋
-// + commitSync()에 파라미터가 들어가지 않으면 poll()로 반환된 가장 마지막 레코드의 오프셋을 기준으로 커밋된다.
-//   하여 개별 레코드 단위로 매번 오프셋을 진행하고 싶다면 commitSync() 메서드에 Map<TopicPartition, OffsetAndMetadata> 인스턴스로 넣으면 된다.
-public class SimpleConsumer3 {
-    private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer3.class);
+/* 리밸런스 리스너를 가진 컨슈머*/
+// 컨슈머 그룹에서 컨슈머가 추가 또는 제거되면 파티션을 컨슈머에 재할당하는 과정인 리밸런스가 일어난다.
+// poll() 메서드를 통해 반환받은 데이터를 모두 처리하기 전에 리밸런스가 발생하면 데이터를 중복처리할 수 있다.
+// 왜냐라면 poll() 메서드를 통해 받은 데이터 중 일부를 처리했으나 커밋하지 않았기 때문이다.
+// 리밸런스 발생 시 데이터를 중복 처리하지 않기 위해서는 리밸런스 발생 시 처리한 데이터를 기준으로 커밋을 시도해야 한다.
+// 이를 위해 카프카는 ConsumerRebalanceListener 인터페이스를 지원한다.
+// ConsumerRebalanceListener:
+// onPartitionAssigned()메서드와 onPartitionRevoked()메서드로 이루어짐
+// onPartitionAssigned() - 리밸런스가 끝난 뒤에 파티션이 할당 완료되면 호출되는 메서드
+// onPartitionRevoked()  - 리밸런스가 시작되기 직전에 호출되는 메서드 (여기에 커밋을 구현하여 처리하면 된다.)
+public class SimpleConsumer6 {
+    private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer6.class);
     private final static String TOPIC_NAME = "test";
     private final static String BOOTSTRAP_SERVERS = "my-kafka:9092";
     private final static String GROUP_ID = "test-group";
@@ -27,12 +33,12 @@ public class SimpleConsumer3 {
         Properties configs = new Properties();
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
-        configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);/* 자동 오프셋 커밋을 false (명시적 오프셋 커밋을 위해서는 ENABLE_AUTO_COMMIT_CONFIG를 false로 해야함 */
+        configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);//리밸런스 발생 시 수동 커밋을 하기 위해 false로 설정
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(configs);
-        consumer.subscribe(List.of(TOPIC_NAME));
+        consumer.subscribe(List.of(TOPIC_NAME), new RebalanceListener());/*RebalanceListener*/
         while(true){
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
             HashMap<TopicPartition, OffsetAndMetadata> currentOffset = new HashMap<>();
@@ -42,10 +48,10 @@ public class SimpleConsumer3 {
                         new TopicPartition(record.topic(), record.partition()),//처리를 완려ㅛ한 record 의 정보를 토대로 Map 인스턴스에 key, value 를 넣는다. 주의할 점은 현재 처리한 오프셋에 1을 더한 값을 커밋해야 한다는 것. 이후에 컨슈머가 poll()을 수행할 때 마지막으로 커밋한 오프셋부터 레코드를 리턴하기 때문
                         new OffsetAndMetadata(record.offset() + 1, null)
                 );
-                consumer.commitSync(currentOffset);// TopicPartition 과 OffsetAndMetadata 로 이루어진 HashMap 을 commitSync()메서드의 파라미터로 넣어
-                // 호출하면 해당 특정 토픽, 파티션의 오프셋이 매번 커밋된다.
+                consumer.commitSync(currentOffset);
             }
 
         }
     }
+
 }
