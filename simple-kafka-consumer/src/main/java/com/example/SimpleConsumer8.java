@@ -32,7 +32,8 @@ public class SimpleConsumer8 {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(configs);
         consumer.subscribe(Arrays.asList(TOPIC_NAME));
-        Set<TopicPartition> assignedTopicPartition = consumer.assignment(); //assignment() 메서드는 Set<TopicPartition> 인스턴스를 반환
+        consumer.assign(Collections.singleton(new TopicPartition(TOPIC_NAME, PARTITION_NUMBER)));
+        Set<TopicPartition> assignedTopicPartition = consumer.assignment(); /*assignment() 메서드는 Set<TopicPartition> 인스턴스를 반환*/
         while(true){
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
             HashMap<TopicPartition, OffsetAndMetadata> currentOffset = new HashMap<>();
@@ -46,5 +47,4 @@ public class SimpleConsumer8 {
             }
         }
     }
-
 }

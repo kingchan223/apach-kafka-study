@@ -1,13 +1,11 @@
 package com.example;
 
 import org.apache.kafka.clients.consumer.*;
-import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 /*
@@ -16,7 +14,7 @@ import java.util.Properties;
 
 // 비동기 오프셋 커밋
 // 동기 오프셋 커밋을 할 경우 커밋 응답을 기다리는 동안 데이터 처리가 일시적으로 중단 되어 더 많은 데이터를 처리하기 위해서 비동기 오프셋 커밋을 사용할 수 있다.
-// 비동기 오프셋 커밋은 commitAsync() 메서드를 호출하여 사용할 수 있다.
+// 비동기 오프셋 커밋은 commit'A'sync() 메서드를 호출하여 사용할 수 있다.
 public class SimpleConsumer4 {
     private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer4.class);
     private final static String TOPIC_NAME = "test";

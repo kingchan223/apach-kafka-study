@@ -16,7 +16,7 @@ import java.util.Properties;
 
 // 동기 오프셋 커밋
 // + commitSync()에 파라미터가 들어가지 않으면 poll()로 반환된 가장 마지막 레코드의 오프셋을 기준으로 커밋된다.
-//   하여 개별 레코드 단위로 매번 오프셋을 진행하고 싶다면 commitSync() 메서드에 Map<TopicPartition, OffsetAndMetadata> 인스턴스로 넣으면 된다.
+//   하여 '개별 레코드 단위'로 매번 오프셋을 진행하고 싶다면 commitSync() 메서드에 Map<TopicPartition, OffsetAndMetadata>를 인스턴스로 넣으면 된다.
 public class SimpleConsumer3 {
     private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer3.class);
     private final static String TOPIC_NAME = "test";
@@ -39,10 +39,11 @@ public class SimpleConsumer3 {
             for (ConsumerRecord<String, String> record : records){
                 logger.info("{}",record);
                 currentOffset.put(
-                        new TopicPartition(record.topic(), record.partition()),//처리를 완려ㅛ한 record 의 정보를 토대로 Map 인스턴스에 key, value 를 넣는다. 주의할 점은 현재 처리한 오프셋에 1을 더한 값을 커밋해야 한다는 것. 이후에 컨슈머가 poll()을 수행할 때 마지막으로 커밋한 오프셋부터 레코드를 리턴하기 때문
+                        new TopicPartition(record.topic(), record.partition()),//처리를 완료한 record 의 정보를 토대로 Map 인스턴스에 key, value 를 넣는다. 주의할 점은 현재 처리한 오프셋에 1을 더한 값을 커밋해야 한다는 것. 이후에 컨슈머가 poll()을 수행할 때 마지막으로 커밋한 오프셋부터 레코드를 리턴하기 때문
                         new OffsetAndMetadata(record.offset() + 1, null)
                 );
-                consumer.commitSync(currentOffset);// TopicPartition 과 OffsetAndMetadata 로 이루어진 HashMap 을 commitSync()메서드의 파라미터로 넣어
+                consumer.commitSync(currentOffset);
+                // TopicPartition 과 OffsetAndMetadata 로 이루어진 HashMap 을 commitSync()메서드의 파라미터로 넣어
                 // 호출하면 해당 특정 토픽, 파티션의 오프셋이 매번 커밋된다.
             }
 

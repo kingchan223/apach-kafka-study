@@ -15,8 +15,8 @@ import java.util.*;
 
 /* 리밸런스 리스너를 가진 컨슈머*/
 // 컨슈머 그룹에서 컨슈머가 추가 또는 제거되면 파티션을 컨슈머에 재할당하는 과정인 리밸런스가 일어난다.
-// poll() 메서드를 통해 반환받은 데이터를 모두 처리하기 전에 리밸런스가 발생하면 데이터를 중복처리할 수 있다.
-// 왜냐라면 poll() 메서드를 통해 받은 데이터 중 일부를 처리했으나 커밋하지 않았기 때문이다.
+// poll() 메서드를 통해 반환받은 데이터를 모두 처리하기 전에 리밸런스가 발생하면 데이터를 중복처리할 수 있는 위험이 있다.
+// 왜냐하면 poll() 메서드를 통해 받은 데이터 중 일부를 처리했으나 '커밋'하지 않았기 때문이다.
 // 리밸런스 발생 시 데이터를 중복 처리하지 않기 위해서는 리밸런스 발생 시 처리한 데이터를 기준으로 커밋을 시도해야 한다.
 // 이를 위해 카프카는 ConsumerRebalanceListener 인터페이스를 지원한다.
 // ConsumerRebalanceListener:
@@ -45,7 +45,7 @@ public class SimpleConsumer6 {
             for (ConsumerRecord<String, String> record : records){
                 logger.info("{}",record);
                 currentOffset.put(
-                        new TopicPartition(record.topic(), record.partition()),//처리를 완려ㅛ한 record 의 정보를 토대로 Map 인스턴스에 key, value 를 넣는다. 주의할 점은 현재 처리한 오프셋에 1을 더한 값을 커밋해야 한다는 것. 이후에 컨슈머가 poll()을 수행할 때 마지막으로 커밋한 오프셋부터 레코드를 리턴하기 때문
+                        new TopicPartition(record.topic(), record.partition()),
                         new OffsetAndMetadata(record.offset() + 1, null)
                 );
                 consumer.commitSync(currentOffset);

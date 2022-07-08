@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-public class RebalanceListener implements ConsumerRebalanceListener {
+public class RebalanceListener implements ConsumerRebalanceListener{
 
     private final static Logger logger = LoggerFactory.getLogger(ConsumerRebalanceListener.class);
 
@@ -22,6 +22,6 @@ public class RebalanceListener implements ConsumerRebalanceListener {
     @Override
     public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
         logger.warn("Partitions are revoked : " + partitions.toString());
-        //consumer.commitSync(currentOffset);
+        //consumer.commitSync(currentOffset); 여기에 오프셋 커밋 로직을 넣으면 된다.
     }
 }
