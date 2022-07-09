@@ -31,7 +31,7 @@ public class SimpleProducer {
 
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, messageValue);
         //카프카 브로커로 데이터를 보내기 위해 ProducerRecord를 생성
-        //ProducerRecord는 생성자를 여러 개 가지는데, 생성자 개수에 따라 오버로딘 되어 생성됨
+        //ProducerRecord는 생성자를 여러 개 가지는데, 생성자 개수에 따라 오버로딩 되어 생성됨
         //키를 따로 설정하지 않아서 키는 null로 설정되어 전송됨
         //ProducerRecord를 생성할 때 두 개의 제네릭 값. 이 값은 메시지의 키와 메시지 값의 타입을 뜻함 메시지 키와 값의 타입은 직렬화 클래스와 동일하게 설정
         producer.send(record);//send()메서드는 즉각적으로 데이터 전송 No. 파라미터로 들어간 record를 프로듀서 내부에 가지고 있다가 배치 형태로 묶어서 전송. = 배치전송
