@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c280710c-04a4-4480-b872-916f6290db33" name="Changes" comment="Chapter 3. 프로듀서 api 까지">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/SimpleProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/SimpleProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +174,8 @@
       <workItem from="1656680552828" duration="5036000" />
       <workItem from="1656776338845" duration="1456000" />
       <workItem from="1657028688834" duration="600000" />
-      <workItem from="1657293797943" duration="841000" />
+      <workItem from="1657293797943" duration="1720000" />
+      <workItem from="1657352833748" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="Chapter 3. 프로듀서 api 까지">
       <created>1656689478386</created>
