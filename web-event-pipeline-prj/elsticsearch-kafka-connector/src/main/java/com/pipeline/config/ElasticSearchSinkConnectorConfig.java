@@ -22,7 +22,8 @@ public class ElasticSearchSinkConnectorConfig extends AbstractConfig {
 
     // 위에서 선언한 3개의 설정값(es.host, es.port, es.index)을 ConfigDef 클래스로 생성
     // ConfigDef 인스턴스는 커넥터에서 설정값이 정상적으로 들어왔는지 검증하기 위해 사용된다.
-    public static ConfigDef CONFIG = new ConfigDef().define(ES_CLUSTER_HOST, Type.STRING, ES_CLUSTER_HOST_DEFAULT_VALUE, Importance.HIGH, ES_CLUSTER_HOST_DOC)
+    public static ConfigDef CONFIG = new ConfigDef()
+            .define(ES_CLUSTER_HOST, Type.STRING, ES_CLUSTER_HOST_DEFAULT_VALUE, Importance.HIGH, ES_CLUSTER_HOST_DOC)
             .define(ES_CLUSTER_PORT, Type.INT, ES_CLUSTER_PORT_DEFAULT_VALUE, Importance.HIGH, ES_CLUSTER_PORT_DOC)
             .define(ES_INDEX, Type.STRING, ES_INDEX_DEFAULT_VALUE, Importance.HIGH, ES_INDEX_DOC);
 

@@ -47,8 +47,11 @@ public class ElasticSearchSinkTask extends SinkTask {
         // 엘라스틱서치에 적재하기 위해 RestHighLevelClient 인스턴스를 생성한다.
         // 사용자가 입력한 호스트와 포트를 기반으로 RestHighLevelClient 인스턴스를 생성한다.
         esClient = new RestHighLevelClient(
-                RestClient.builder(new HttpHost(config.getString(config.ES_CLUSTER_HOST),
-                        config.getInt(config.ES_CLUSTER_PORT))));
+                RestClient
+                        .builder(
+                                new HttpHost(config.getString(config.ES_CLUSTER_HOST),
+                                config.getInt(config.ES_CLUSTER_PORT)))
+                        );
     }
 
     @Override
@@ -68,16 +71,16 @@ public class ElasticSearchSinkTask extends SinkTask {
                         bulkRequest,
                         RequestOptions.DEFAULT,
                         new ActionListener<BulkResponse>() {//엘라스틱서치에 데이터가 제대로 담겼는지 여부를 로그로 남긴다.
-                                @Override
-                                public void onResponse(BulkResponse bulkResponse) {
-                                    if (bulkResponse.hasFailures()) {
-                                        logger.error(bulkResponse.buildFailureMessage());
-                                    } else {
-                                        logger.info("bulk save success");
-                                    }
+                            @Override
+                            public void onResponse(BulkResponse bulkResponse) {
+                                if (bulkResponse.hasFailures()) {
+                                    logger.error(bulkResponse.buildFailureMessage());
+                                } else {
+                                    logger.info("bulk save success");
                                 }
+                            }
 
-                                @Override
+                            @Override
                                 public void onFailure(Exception e) {
                                     logger.error(e.getMessage(), e);
                                 }
